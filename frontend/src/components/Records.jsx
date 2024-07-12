@@ -1,58 +1,54 @@
 import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-
-const columns = [
-  {
-    field: 'name',
-    headerName: 'Movie Name',
-    width: 200,
-  },
-  {
-    field: 'year',
-    headerName: 'Year',
-    type: 'number',
-    width: 100,
-  },
-  {
-    field: 'category',
-    headerName: 'Category',
-    width: 150,
-  },
-  {
-    field: 'director',
-    headerName: 'Director',
-    width: 200,
-  },
-];
-
-const rows = [
-  { id: 1, name: 'Titanic', year: 1997, category: 'Romance', director: 'James Cameron' },
-  { id: 2, name: 'The Shawshank Redemption', year: 1994, category: 'Drama', director: 'Frank Darabont' },
-  { id: 3, name: 'The Godfather', year: 1972, category: 'Crime', director: 'Francis Ford Coppola' },
-  { id: 4, name: 'The Dark Knight', year: 2008, category: 'Action', director: 'Christopher Nolan' },
-  { id: 5, name: 'Pulp Fiction', year: 1994, category: 'Crime', director: 'Quentin Tarantino' },
-  { id: 6, name: 'Forrest Gump', year: 1994, category: 'Drama', director: 'Robert Zemeckis' },
-  { id: 7, name: 'Inception', year: 2010, category: 'Sci-Fi', director: 'Christopher Nolan' },
-  { id: 8, name: 'Fight Club', year: 1999, category: 'Drama', director: 'David Fincher' },
-  { id: 9, name: 'The Matrix', year: 1999, category: 'Sci-Fi', director: 'The Wachowskis' },
-];
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import axios from 'axios';
+import { useState, useEffect } from 'react'
 
 const Records = () => {
+  const [rows,setRows]=useState([]);
+  useEffect(()=>{
+    axios.get('http://localhost:4000/movies').then((res)=>{
+      console.log(res)
+      setRows(res.data)
+    })
+  })
+
   return (
-    <div id="table" style={{ height: 400, width: '100%' }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
-          },
-        }}
-        pageSizeOptions={[5, 10]}
-        checkboxSelection
-      />
-    </div>
-  );
+    <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Movie Name</TableCell>
+            <TableCell>Director</TableCell>
+            <TableCell align="left">Category</TableCell>
+            <TableCell align="left">Release Year</TableCell>
+          
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows.map((row) => (
+            <TableRow
+              key={row.movieName}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                {row.movieName}
+              </TableCell>
+              <TableCell>{row.movieDirector}</TableCell>
+              <TableCell>{row.category}</TableCell>
+              <TableCell align="left">{row.releaseYear}</TableCell>
+              
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  )
 }
 
-export default Records;
+export default Records

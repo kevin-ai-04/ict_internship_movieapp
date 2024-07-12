@@ -3,8 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import Navbar from './components/Navbar'
-import Panel from './components/Panel'
-import Form from './components/Form'
+import Add from './components/Add'
 import {Routes, Route} from 'react-router-dom'
 import Records from './components/Records'
 
@@ -16,11 +15,9 @@ function App() {
     {/* NavBar */}
     <Navbar/>
     <Routes>
-      <Route path='/add' element={<Form/>}></Route>
-      <Route path='' element={<Records/>}></Route>
+      <Route path='/add' element={<Add/>}></Route>
+      <Route path='/' element={<Records/>}></Route>
     </Routes>
-    <Panel class="panel"></Panel>
-    <Panel class="panel"></Panel>
     </>
   )
 }

@@ -4,23 +4,24 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { useState } from "react";
+import axios from 'axios';
+
 
 const Form = ({ movie }) => {
-  const [form, setForm] = useState(
-    {
-      name: movie?.name || '',
-      year: movie?.year || '',
-      category: movie?.category || '',
-      director: movie?.director || ''
-    }
-  );
+  const [form, setForm] = useState({
+    movieName: '',
+    movieDirector: '',
+    category: '',
+    releaseYear: ''
+  });
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-  let handleSubmit = () => {
+  function handleSubmit() {
     console.log(form);
+    // Add logic to send form data to backend or handle further actions
   }
 
   return (
@@ -41,20 +42,19 @@ const Form = ({ movie }) => {
               required
               id="outlined-required"
               label="Required"
-              name="name"
-              value={form.name}
+              name="movieName"
+              value={form.movieName}
               onChange={handleChange}
             />
-          </div>
-
+          </div> 
           <div>
-            <p>Year:</p>
+            <p>Director:</p>
             <TextField
               required
               id="outlined-required"
               label="Required"
-              name="year"
-              value={form.year}
+              name="movieDirector"
+              value={form.movieDirector}
               onChange={handleChange}
             />
           </div>
@@ -72,20 +72,20 @@ const Form = ({ movie }) => {
           </div>
 
           <div>
-            <p>Director:</p>
+            <p>Year:</p>
             <TextField
               required
               id="outlined-required"
               label="Required"
-              name="director"
-              value={form.director}
+              name="releaseYear"
+              value={form.releaseYear}
               onChange={handleChange}
             />
           </div>
         </Box>
         <div>
           <Stack direction="row" spacing={2}>
-            <Button variant="contained" onClick={handleSubmit}>Submit</Button>
+            <Button variant="contained" onClick={handleSubmit}>Send Data</Button>
           </Stack>
           <br/>
         </div>
