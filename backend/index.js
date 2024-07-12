@@ -6,6 +6,7 @@ require('./connection');
 
 //tofetch the movie data
 app.get('/movies',async(req,res)=>{
+    console.log('inside')
     try{
         const data=await movieModel.find();
         res.send(data)
