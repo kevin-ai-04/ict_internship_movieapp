@@ -19,11 +19,16 @@ const Form = ({ movie }) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-  function handleSubmit() {
-    console.log(form);
-    // Add logic to send form data to backend or handle further actions
-  }
+let sendData = () => {
+  console.log(form);
+  axios.post('http://localhost:4000/newmovie', form).then((res) => {
+    alert('Data Added');
+  }).catch((error) => {
+    console.log(error);
+  });
+}
 
+  
   return (
     <>
       <div id="formcard">
@@ -85,7 +90,7 @@ const Form = ({ movie }) => {
         </Box>
         <div>
           <Stack direction="row" spacing={2}>
-            <Button variant="contained" onClick={handleSubmit}>Send Data</Button>
+            <Button variant="contained" onClick={sendData}>Send Data</Button>
           </Stack>
           <br/>
         </div>

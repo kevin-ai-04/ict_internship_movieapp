@@ -19,10 +19,6 @@ app.get('/movies',async(req,res)=>{
     }
 })
 
-app.listen(PORT,()=>{
-    console.log('Server is running on PORT 4000')
-})
-
 app.post('/newmovie',async(req,res)=>{
     try{
         var item=req.body;
@@ -32,4 +28,22 @@ app.post('/newmovie',async(req,res)=>{
     } catch (error) {
         console.log(error)
     }
+})
+
+
+
+
+//delete a document
+app.delete('/movieremoval/:id',async(req,res)=>{
+    try{
+        await movieModel.findByIdAndDelete(req.params.id);
+        res.send('Deleted successfully')
+    } catch(error){
+        console.log(error)
+    }
+
+})
+
+app.listen(PORT,()=>{
+    console.log('Server is running on PORT 4000')
 })

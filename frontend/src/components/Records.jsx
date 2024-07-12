@@ -8,6 +8,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import axios from 'axios';
 import { useState, useEffect } from 'react'
+import { Button } from '@mui/material';
+
+
 
 const Records = () => {
   const [rows,setRows]=useState([]);
@@ -17,6 +20,15 @@ const Records = () => {
       setRows(res.data)
     })
   })
+
+function deleteMovie{
+  axios.delete('http://localhost:4000/movieremoval').then((res)=>{
+    alert('Data deleted');
+    window.location.reload()
+  }).catch((error)=>{
+    console.log(error)
+  })
+}
 
   return (
     <TableContainer component={Paper}>
@@ -42,7 +54,8 @@ const Records = () => {
               <TableCell>{row.movieDirector}</TableCell>
               <TableCell>{row.category}</TableCell>
               <TableCell align="left">{row.releaseYear}</TableCell>
-              
+              <TableCell><Button variant="contained" color="secondary">Edit</Button></TableCell>
+              <TableCell><Button variant="contained" color="error" onClick={deleteMovie(row._id)}>Delete</Button></TableCell>
             </TableRow>
           ))}
         </TableBody>
