@@ -21,8 +21,8 @@ const Records = () => {
     })
   })
 
-function deleteMovie{
-  axios.delete('http://localhost:4000/movieremoval').then((res)=>{
+function deleteMovie(id) {
+  axios.delete(`http://localhost:4000/movieremoval/${id}`).then((res)=>{
     alert('Data deleted');
     window.location.reload()
   }).catch((error)=>{
@@ -55,7 +55,7 @@ function deleteMovie{
               <TableCell>{row.category}</TableCell>
               <TableCell align="left">{row.releaseYear}</TableCell>
               <TableCell><Button variant="contained" color="secondary">Edit</Button></TableCell>
-              <TableCell><Button variant="contained" color="error" onClick={deleteMovie(row._id)}>Delete</Button></TableCell>
+              <TableCell><Button variant="contained" color="error" onClick={() => deleteMovie(row._id)}>Delete</Button></TableCell>
             </TableRow>
           ))}
         </TableBody>
